@@ -53,6 +53,7 @@ multiplayer_game()
       
 #play with computer
 #case "C":
+game_mode = input("Play with a friend (press 'F') or Play with Computer (press 'C'): ").upper()
     #player wins toss
     #computer wins toss
 
