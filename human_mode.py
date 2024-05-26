@@ -15,30 +15,25 @@ def multiplayer_game():
     print(f"~Total Matches left: {matches_left}.\n")
 
     while total_matches_picked < 21:
-        while True: #check for correct pick
-            turn_matches_picked = int(input(f"{players[turn]}, pick matches between 1 and 3: "))
-            if matches_left >=3:
-                if turn_matches_picked < 1 or turn_matches_picked > 3:
-                    print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
-                    print(f"~Total matches picked: {total_matches_picked}/21.")
-                    print(f"~Total Matches left: {matches_left}.\n")
-                else:
-                    break
-            else:
-                if turn_matches_picked < 1 or turn_matches_picked > matches_left:
-                    print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")
-                    print(f"~Total matches picked: {total_matches_picked}/21.")
-                    print(f"~Total Matches left: {matches_left}.\n")
-                else:
-                    break
-            
-        total_matches_picked = total_matches_picked + turn_matches_picked
-        matches_left = matches_left - turn_matches_picked
+        turn_matches_picked = get_valid_pick(players[turn], matches_left)
+        total_matches_picked += turn_matches_picked
+        matches_left -= turn_matches_picked
         
         print(f"\n~Total matches picked: {total_matches_picked}/21.")
         print(f"~Total Matches left: {matches_left}.\n")
 
-        #turn = player2_name if turn == player1_name else player1_name
-        turn = (turn+1)%len(players)
+        turn = (turn + 1) % len(players)
 
     print(f"{players[turn]} is the winner!\n")
+
+def get_valid_pick(player_name, matches_left):
+    while True:
+        pick = int(input(f"{player_name}, pick matches between 1 and 3: "))
+        if matches_left >= 3:
+            if 1 <= pick <= 3:
+                return pick
+            print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
+        else:
+            if 1 <= pick <= matches_left:
+                return pick
+            print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")

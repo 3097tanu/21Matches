@@ -11,104 +11,39 @@ def game_with_computer():
 
     total_matches_picked = 0
     matches_left = 21
-    print(f"\n~Total matches picked: {total_matches_picked}/21.")
-    print(f"~Total Matches left: {matches_left}.\n")
 
-    if players[turn] != computer:
-        # player plays first
-        while total_matches_picked < 21:
-            if players[turn] != computer:
-                while True: #check for correct pick
-                    turn_matches_picked = int(input(f"{players[turn]}, pick matches between 1 and 3: "))
-                    if matches_left >=3:
-                        if turn_matches_picked < 1 or turn_matches_picked > 3:
-                            print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
-                            print(f"~Total matches picked: {total_matches_picked}/21.")
-                            print(f"~Total Matches left: {matches_left}.\n")
-                        else:
-                            break
-                    else:
-                        if turn_matches_picked < 1 or turn_matches_picked > matches_left:
-                            print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")
-                            print(f"~Total matches picked: {total_matches_picked}/21.")
-                            print(f"~Total Matches left: {matches_left}.\n")
-                        else:
-                            break
-                
-                # total_matches_picked = total_matches_picked + turn_matches_picked
-                # matches_left = matches_left - turn_matches_picked
-                
-                # print(f"\n~Total matches picked: {total_matches_picked}/21.")
-                # print(f"~Total Matches left: {matches_left}.\n")
+    while total_matches_picked < 21:
+        if players[turn] != computer:
+            turn_matches_picked = get_player_pick(players[turn], total_matches_picked, matches_left)
+        else:
+            turn_matches_picked = get_computer_pick(total_matches_picked, matches_left)
+            print(f"Computer picked {turn_matches_picked} match." if turn_matches_picked == 1 else f"Computer picked {turn_matches_picked} matches.")
 
-            else: 
-                turn_matches_picked = 4 - (total_matches_picked % 4)
-                               
-                print(f"Computer picked {turn_matches_picked} match." if turn_matches_picked == 1 else f"Computer picked {turn_matches_picked} matches.")
-                
-                # total_matches_picked = total_matches_picked + turn_matches_picked
-                # matches_left = matches_left - turn_matches_picked
-                
-                # print(f"\n~Total matches picked: {total_matches_picked}/21.")
-                # print(f"~Total Matches left: {matches_left}.\n")
+        total_matches_picked += turn_matches_picked
+        matches_left -= turn_matches_picked
+        print(f"\n~Total matches picked: {total_matches_picked}/21.")
+        print(f"~Total Matches left: {matches_left}.\n")
 
-            total_matches_picked = total_matches_picked + turn_matches_picked
-            matches_left = matches_left - turn_matches_picked
-                
-            print(f"\n~Total matches picked: {total_matches_picked}/21.")
-            print(f"~Total Matches left: {matches_left}.\n")
-            
-            # switch turns
-            turn = (turn+1)%len(players)  
-            
-        print(f"{players[turn]} is the winner!\n")
+        turn = (turn + 1) % len(players)
 
+    print(f"{players[turn]} is the winner!\n")
+
+def get_player_pick(player_name, total_matches_picked, matches_left):
+    while True:
+        turn_matches_picked = int(input(f"{player_name}, pick matches between 1 and 3: "))
+        if matches_left >= 3:
+            if 1 <= turn_matches_picked <= 3:
+                return turn_matches_picked
+            print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
+        else:
+            if 1 <= turn_matches_picked <= matches_left:
+                return turn_matches_picked
+            print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")
+
+def get_computer_pick(total_matches_picked, matches_left):
+    if total_matches_picked % 4 != 0:
+        return 4 - (total_matches_picked % 4)
+    elif matches_left == 1:
+        return 1
     else:
-        # computer plays first
-        while total_matches_picked < 21:
-            if players[turn] != player_name:
-                if total_matches_picked % 4 != 0:
-                    turn_matches_picked = 4 - (total_matches_picked % 4)
-                else:
-                    if matches_left == 1:
-                        turn_matches_picked = 1
-                    else:
-                        turn_matches_picked = random.choice([1,2,3])            
-
-                print(f"Computer picked {turn_matches_picked} match." if turn_matches_picked == 1 else f"Computer picked {turn_matches_picked} matches.")
-
-            else:
-                while True: #check for correct pick
-                    turn_matches_picked = int(input(f"{players[turn]}, pick matches between 1 and 3: "))
-                    if matches_left >=3:
-                        if turn_matches_picked < 1 or turn_matches_picked > 3:
-                            print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
-                            print(f"~Total matches picked: {total_matches_picked}/21.")
-                            print(f"~Total Matches left: {matches_left}.\n")
-                        else:
-                            break
-                    else:
-                        if turn_matches_picked < 1 or turn_matches_picked > matches_left:
-                            print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")
-                            print(f"~Total matches picked: {total_matches_picked}/21.")
-                            print(f"~Total Matches left: {matches_left}.\n")
-                        else:
-                            break
-                    
-                # total_matches_picked = total_matches_picked + turn_matches_picked
-                # matches_left = matches_left - turn_matches_picked
-                
-                # print(f"\n~Total matches picked: {total_matches_picked}/21.")
-                # print(f"~Total Matches left: {matches_left}.\n")
-            
-                               
-            total_matches_picked = total_matches_picked + turn_matches_picked
-            matches_left = matches_left - turn_matches_picked
-                
-            print(f"\n~Total matches picked: {total_matches_picked}/21.")
-            print(f"~Total Matches left: {matches_left}.\n")
-
-            # switch turns
-            turn = (turn+1)%len(players)
-
-        print(f"{players[turn]} is the winner!")
+        return random.choice([1, 2, 3])
