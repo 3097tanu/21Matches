@@ -1,4 +1,5 @@
 import random
+import player_pick
 
 # play with computer
 def game_with_computer():
@@ -14,10 +15,10 @@ def game_with_computer():
 
     while total_matches_picked < 21:
         if players[turn] != computer:
-            turn_matches_picked = get_player_pick(players[turn], total_matches_picked, matches_left)
+            turn_matches_picked = player_pick.get_player_pick(players[turn], total_matches_picked, matches_left)
         else:
             turn_matches_picked = get_computer_pick(total_matches_picked, matches_left)
-            print(f"Computer picked {turn_matches_picked} match." if turn_matches_picked == 1 else f"Computer picked {turn_matches_picked} matches.")
+            print(f"{computer} picked {turn_matches_picked} match." if turn_matches_picked == 1 else f"{computer} picked {turn_matches_picked} matches.")
 
         total_matches_picked += turn_matches_picked
         matches_left -= turn_matches_picked
@@ -27,18 +28,8 @@ def game_with_computer():
         turn = (turn + 1) % len(players)
 
     print(f"{players[turn]} is the winner!\n")
-
-def get_player_pick(player_name, total_matches_picked, matches_left):
-    while True:
-        turn_matches_picked = int(input(f"{player_name}, pick matches between 1 and 3: "))
-        if matches_left >= 3:
-            if 1 <= turn_matches_picked <= 3:
-                return turn_matches_picked
-            print(f"\nInvalid input! You can only pick 1, 2 or 3 matches.\nTry again!\n")
-        else:
-            if 1 <= turn_matches_picked <= matches_left:
-                return turn_matches_picked
-            print(f"\nInvalid input! You have only {matches_left} match left to pick.\nTry again!\n" if matches_left == 1 else f"\nInvalid input! You have only {matches_left} matches left to pick.\nTry again!\n")
+    if len(players) == 2:
+        print(f"{players[(turn + 1) % 2]} is the loser!\n")
 
 def get_computer_pick(total_matches_picked, matches_left):
     if total_matches_picked % 4 != 0:
