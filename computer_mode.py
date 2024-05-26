@@ -6,9 +6,8 @@ def game_with_computer():
     computer = "21GPT"
     players = [player_name, computer]
 
-    turn = 1 #remove
-    # turn = random.choice(range(len(players)))
-    print(f"\n{players[turn]} will play first!")
+    turn = random.choice(range(len(players)))
+    print(f"\n{players[turn]} won the toss and will play first!")
 
     total_matches_picked = 0
     matches_left = 21
