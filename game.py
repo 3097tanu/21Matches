@@ -51,7 +51,7 @@ def multiplayer_game():
 # play with computer
 def game_with_computer():
     player_name = input("Enter Player's name: ")
-    computer = "Computer"
+    computer = "21GPT"
     players = [player_name, computer]
 
     turn = 0
