@@ -1,14 +1,24 @@
 import random
 import player_pick
 
+COMPUTER_NAME = "21GPT"
+
+def get_name():
+    while True:
+        player_name = input("Enter Player's name: ")
+        if player_name == COMPUTER_NAME:
+            print("\nThe name already exists! Enter another name.")
+        else:
+            return player_name
+
 # play with computer
 def game_with_computer():
-    player_name = input("Enter Player's name: ")
-    computer = "21GPT"
+    player_name = get_name()
+    computer = COMPUTER_NAME
     players = [player_name, computer]
 
     turn = random.choice(range(len(players)))
-    print(f"\n{players[turn]} won the toss and will play first!")
+    print(f"\n{players[turn]} will play first!")
 
     total_matches_picked = 0
     matches_left = 21

@@ -8,7 +8,7 @@ def multiplayer_game():
     players = [player1_name, player2_name]
 
     turn = random.choice(range(len(players)))
-    print(f"\n{players[turn]} won the toss and will play first!")
+    print(f"\n{players[turn]} will play first!")
         
     total_matches_picked = 0
     matches_left = 21
