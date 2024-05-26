@@ -54,7 +54,7 @@ def game_with_computer():
     computer = "Computer"
     players = [player_name, computer]
 
-    turn = 0
+    turn = 0 #remove
     # turn = random.choice(range(len(players)))
     print(f"\n{players[turn]} will play first!")
 
